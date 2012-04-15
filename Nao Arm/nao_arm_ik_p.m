@@ -1,0 +1,19 @@
+function theta = nao_arm_ik_p(p,a2,d4)
+
+theta = [0,0,0,0]';
+
+
+theta(1) = atan2(p(2),p(1));
+theta(3) = asin(-(((p(1)/cos(theta(1)))^2 + p(3)^2 - a2^2 - d4^2)/(2*a2*d4)));
+a = -p(1)/cos(theta(1)) - a2 + d4*sin(theta(3));
+b = -2*d4*cos(theta(3));
+c = a2 - d4*sin(theta(3)) - p(1)/cos(theta(1));
+if(p(3) < 0)
+    num = -b + sqrt(b^2 - 4*a*c);
+else
+    num = -b - sqrt(b^2 - 4*a*c);
+end
+den = 2*a;
+theta(2) = 2*atan2(num,den);
+
+end
